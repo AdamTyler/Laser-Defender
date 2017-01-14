@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour {
 
             GameObject enemy = Instantiate (enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
             enemy.transform.parent = child;
+
         }
         
 	}
