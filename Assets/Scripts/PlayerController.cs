@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject projectile;
     public float projectileSpeed;
     public float fireRate = 0.5f;
+    public float health = 250f;
 
     float xMin;
     float xMax;
@@ -53,4 +54,20 @@ public class PlayerController : MonoBehaviour {
         transform.position = new Vector3(newX, transform.position.y, transform.position.z);
 	
 	}
+
+    void OnTriggerEnter2D (Collider2D col)
+    {
+        Projectile missle = col.gameObject.GetComponent<Projectile> ();
+
+        if (missle) {
+            missle.Hit();
+            health -= missle.getDamage ();
+            if (health <= 0) {
+                Debug.Log("DEAD");
+                Destroy (gameObject);
+            }
+            Debug.Log ("HIT FOR " + missle.getDamage());
+        }
+
+    }
 }
