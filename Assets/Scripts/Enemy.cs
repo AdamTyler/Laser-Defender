@@ -7,6 +7,13 @@ public class Enemy : MonoBehaviour {
     public GameObject projectile;
     public float projectileSpeed = 1f;
     public float fireFreq = 0.6f;
+    public int scoreValue = 120;
+
+    private Score scoreKeeper;
+
+    void Start() {
+        scoreKeeper = GameObject.Find("Score").GetComponent<Score>();
+    }
 
     void OnTriggerEnter2D (Collider2D col)
     {
@@ -18,6 +25,7 @@ public class Enemy : MonoBehaviour {
             if (health <= 0) {
                 Debug.Log("DEAD");
                 Destroy (gameObject);
+                scoreKeeper.ScorePoints(scoreValue);
             }
             Debug.Log ("HIT FOR " + missle.getDamage());
         }
