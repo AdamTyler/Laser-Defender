@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour {
     public float fireRate = 0.5f;
     public float health = 250f;
 
+    public AudioClip fireSound;
+    public AudioClip deadSound;
+
     float xMin;
     float xMax;
 
@@ -23,9 +26,12 @@ public class PlayerController : MonoBehaviour {
 
     void Fire ()
     {
+        // Create shot
         GameObject beam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
         Rigidbody2D rbeam = beam.GetComponent<Rigidbody2D> ();
         rbeam.velocity = new Vector3(0, projectileSpeed, 0);
+        // Play sound
+        AudioSource.PlayClipAtPoint (fireSound, transform.position);
     }
 	
 	// Update is called once per frame
@@ -64,6 +70,7 @@ public class PlayerController : MonoBehaviour {
             health -= missle.getDamage ();
             if (health <= 0) {
                 Debug.Log("DEAD");
+                AudioSource.PlayClipAtPoint (deadSound, transform.position);
                 Destroy (gameObject);
             }
             Debug.Log ("HIT FOR " + missle.getDamage());

@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour {
     public float fireFreq = 0.6f;
     public int scoreValue = 120;
 
+    public AudioClip fireSound;
+    public AudioClip deadSound;
+
     private Score scoreKeeper;
 
     void Start() {
@@ -23,13 +26,18 @@ public class Enemy : MonoBehaviour {
             missle.Hit();
             health -= missle.getDamage ();
             if (health <= 0) {
-                Debug.Log("DEAD");
-                Destroy (gameObject);
-                scoreKeeper.ScorePoints(scoreValue);
+                Die();
             }
             Debug.Log ("HIT FOR " + missle.getDamage());
         }
 
+    }
+
+    void Die() {
+        Debug.Log("DEAD");
+        AudioSource.PlayClipAtPoint (deadSound, transform.position);
+        Destroy (gameObject);
+        scoreKeeper.ScorePoints(scoreValue);       
     }
 
     void Fire ()
@@ -37,6 +45,8 @@ public class Enemy : MonoBehaviour {
         GameObject beam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
         Rigidbody2D rbeam = beam.GetComponent<Rigidbody2D> ();
         rbeam.velocity = new Vector3(0, -projectileSpeed, 0);
+        // Play sound
+        AudioSource.PlayClipAtPoint (fireSound, transform.position);
     }
     
     // Update is called once per frame
