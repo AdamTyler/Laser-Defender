@@ -37,7 +37,8 @@ public class Enemy : MonoBehaviour {
         Debug.Log("DEAD");
         AudioSource.PlayClipAtPoint (deadSound, transform.position);
         Destroy (gameObject);
-        scoreKeeper.ScorePoints(scoreValue);       
+        scoreKeeper.ScorePoints(scoreValue);   
+            
     }
 
     void Fire ()

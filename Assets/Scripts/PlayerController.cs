@@ -69,12 +69,19 @@ public class PlayerController : MonoBehaviour {
             missle.Hit();
             health -= missle.getDamage ();
             if (health <= 0) {
-                Debug.Log("DEAD");
-                AudioSource.PlayClipAtPoint (deadSound, transform.position);
-                Destroy (gameObject);
+                Die();
             }
             Debug.Log ("HIT FOR " + missle.getDamage());
         }
 
+    }
+
+    void Die ()
+    {
+        Debug.Log("DEAD");
+        AudioSource.PlayClipAtPoint (deadSound, transform.position);
+        Destroy (gameObject);
+        LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        man.LoadLevel ("Win Screen");
     }
 }
